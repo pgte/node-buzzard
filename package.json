@@ -1,6 +1,6 @@
 {
   "name": "buzzard",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Buzzard Protocol implementation",
   "main": "index.js",
   "scripts": {
@@ -23,5 +23,6 @@
   },
   "devDependencies": {
     "tap": "~0.4.6"
-  }
+  },
+  "tags": ["authentication", "mac", "hawk"]
 }
