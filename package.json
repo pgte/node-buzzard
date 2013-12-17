@@ -1,0 +1,24 @@
+{
+  "name": "buzzard",
+  "version": "0.0.1",
+  "description": "Buzzard Protocol implementation",
+  "main": "index.js",
+  "scripts": {
+    "test": "tap tests/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/pgte/node-buzzard.git"
+  },
+  "author": "pgte",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pgte/node-buzzard/issues"
+  },
+  "homepage": "https://github.com/pgte/node-buzzard",
+  "browser": "client.js",
+  "dependencies": {},
+  "devDependencies": {
+    "tap": "~0.4.6"
+  }
+}
