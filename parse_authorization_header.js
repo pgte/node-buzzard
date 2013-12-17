@@ -52,4 +52,4 @@ function parseAuthorizationHeader(header) {
     throw Boom.badRequest(err || 'Bad header format');
 
   return attributes;
-};
+}

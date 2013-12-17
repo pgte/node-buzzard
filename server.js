@@ -1,4 +1,3 @@
-var crypto      = require('crypto');
 var Boom        = require('boom');
 var extend      = require('xtend');
 
@@ -60,10 +59,10 @@ S.authenticate = function authenticate(req, cb) {
     if (err) return cb(err);
 
     if (!credentials.key || !credentials.algorithm)
-      return callback(Boom.internal('Invalid credentials'));
+      return cb(Boom.internal('Invalid credentials'));
 
     if (algorithms.indexOf(credentials.algorithm) === -1)
-      return callback(Boom.internal('Unknown algorithm'), credentials, artifacts);
+      return cb(Boom.internal('Unknown algorithm'));
 
     var doc = assetString(attributes.nonce, attributes.ts);
     var ac = sign(credentials, doc);

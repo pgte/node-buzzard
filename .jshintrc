@@ -1,0 +1,17 @@
+{
+  "browser": false,
+  "curly": false,
+  "eqeqeq": false,
+  "indent": 2,
+  "unused": true,
+  "node": true,
+  "esnext": true,
+  "globals": {},
+  "globalstrict": true,
+  "smarttabs": true,
+  "trailing": true,
+  "undef": true,
+  "maxerr": 50,
+  "laxcomma": false,
+  "strict": false
+}

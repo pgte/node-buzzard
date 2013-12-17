@@ -19,12 +19,10 @@ function header(credentials) {
   var doc = assetString(nonce, ts);
   var ac = sign(credentials, doc);
 
-  var header = 'Buzzard id="' + encodeURIComponent(credentials.id) +
-               '", ts="' + ts +
-               '", nonce="' + nonce +
-               '", ac="' + ac + '"';
-
-  return header;
+  return 'Buzzard id="' + encodeURIComponent(credentials.id) +
+         '", ts="' + ts +
+         '", nonce="' + nonce +
+         '", ac="' + ac + '"';
 }
 
 function randomBytes(size) {
