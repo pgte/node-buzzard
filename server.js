@@ -10,7 +10,7 @@ var DEFAULT_MAX_LAG_MS = 1000 * 60 * 60 * 24; // 24 hours
 var algorithms  = ['sha1', 'sha256'];
 
 exports = module.exports  = createServer;
-exports.middleware = middleware;
+exports.middleware = require('./middleware');
 
 function createServer(credentialsFunc, options) {
   return new Server(credentialsFunc, options);
@@ -58,41 +58,33 @@ S.authenticate = function authenticate(req, cb) {
   function gotCredentials(err, credentials) {
     if (err) return cb(err);
 
-    if (!credentials.key || !credentials.algorithm)
-      return cb(Boom.internal('Invalid credentials'));
-
-    if (algorithms.indexOf(credentials.algorithm) === -1)
-      return cb(Boom.internal('Unknown algorithm'));
-
-    var doc = assetString(attributes.nonce, attributes.ts);
-    var ac = sign(credentials, doc);
-
-    if (ac != attributes.ac)
-      return cb(Boom.unauthorized('Invalid authentication code'));
-
-    var ts = Number(attributes.ts);
-    if (ts != attributes.ts)
-      return cb(Boom.unauthorized('Invalid timestamp: must be a number'));
-
-    if (expired(ts, self.options.maxLagMS))
-      return cb(Boom.unauthorized('Invalid timestamp, must be within 24 hours'));
+    err = validateCredentials(credentials, attributes, self.options);
+    if (err) return cb(err);
 
     cb(null, credentials, attributes);
-
   }
 };
 
-/// middleware
 
-function middleware(credentialsFunc, options) {
-  var server = createServer(credentialsFunc, options);
+/// validateCredentials
 
-  return function(req, res, next) {
-    server.authenticate(req, replied);
+function validateCredentials(credentials, attributes, options) {
+  if (!credentials.key || !credentials.algorithm)
+    return Boom.internal('Invalid credentials');
 
-    function replied(err) {
-      if (err) res.send(err);
-      else next();
-    }
-  };
+  if (algorithms.indexOf(credentials.algorithm) === -1)
+    return Boom.internal('Unknown algorithm');
+
+  var doc = assetString(attributes.nonce, attributes.ts);
+  var ac = sign(credentials, doc);
+
+  if (ac != attributes.ac)
+    return Boom.unauthorized('Invalid authentication code');
+
+  var ts = Number(attributes.ts);
+  if (ts != attributes.ts)
+    return Boom.unauthorized('Invalid timestamp: must be a number');
+
+  if (expired(ts, options.maxLagMS))
+    return Boom.unauthorized('Invalid timestamp, must be within 24 hours');
 }
