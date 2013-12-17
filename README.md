@@ -1,6 +1,8 @@
 # Buzzard
 
-Authentication protocol.
+[![Build Status](https://travis-ci.org/pgte/node-buzzard.png?branch=master)](https://travis-ci.org/pgte/node-buzzard)
+
+Authentication protocol for HTTPS services.
 
 ## Features
 
