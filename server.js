@@ -58,6 +58,8 @@ S.authenticate = function authenticate(req, cb) {
   function gotCredentials(err, credentials) {
     if (err) return cb(err);
 
+    if (! credentials) return cb(Boom.unauthorized('no credentials'));
+
     err = validateCredentials(credentials, attributes, self.options);
     if (err) return cb(err);
 
