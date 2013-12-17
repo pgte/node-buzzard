@@ -100,3 +100,7 @@ var buzzardMiddleware = BuzzardMiddleware(credentialsFunc);
 
 app.use(buzzardMiddleware);
 ```
+
+## License
+
+MIT
