@@ -29,6 +29,10 @@ var credentials = {
 };
 
 var header = Client.header(credentials);
+
+// use request, jquery or whatvs, but inject the header:
+
+'Authorization': header
 ```
 
 ## Server
