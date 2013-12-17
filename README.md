@@ -74,8 +74,6 @@ function getCredentials(id, cb) {
 Authenticates a request object.
 
 ```javascript
-var buzzard = require('buzzard').server;
-
 server.on('request', authenticate);
 
 function authenticate(req) {
