@@ -1,5 +1,6 @@
 var Boom        = require('boom');
 var extend      = require('xtend');
+var URL         = require('url');
 
 var sign        = require('./sign');
 var assetString = require('./asset_string');
@@ -32,9 +33,11 @@ var S = Server.prototype;
 S.authenticate = function authenticate(req, cb) {
   var self = this;
 
-  var header = req.headers.authorization;
+  var header = req.headers && req.headers.authorization;
 
-  if (! header) return cb(Boom.unauthorized('No authorization header'));
+  if (! header) {
+    return authenticateURL.call(this, req, cb);
+  }
 
   var attributes;
   try {
@@ -77,7 +80,7 @@ function validateCredentials(credentials, attributes, options) {
   if (algorithms.indexOf(credentials.algorithm) === -1)
     return Boom.internal('Unknown algorithm');
 
-  var doc = assetString(attributes.nonce, attributes.ts);
+  var doc = assetString(attributes);
   var ac = sign(credentials, doc);
 
   if (ac != attributes.ac)
@@ -89,4 +92,38 @@ function validateCredentials(credentials, attributes, options) {
 
   if (expired(ts, options.maxLagMS))
     return Boom.unauthorized('Invalid timestamp, must be within 24 hours');
+}
+
+
+/// authenticate URL
+
+function authenticateURL(req, cb) {
+  var self = this;
+  var parsedURL = URL.parse(req.url, true, true);
+  var query = parsedURL.query;
+
+  if (! query.nonce ||
+      ! query.ts ||
+      ! query.buzzard)
+    return cb(Boom.unauthorized('No authorization header or buzzard in URL'));
+
+  var attributes = {
+    ts: query.ts,
+    nonce: query.nonce,
+    ac: query.buzzard
+  };
+
+  this._credentialsFunc(query.id, gotCredentials);
+
+  function gotCredentials(err, credentials) {
+    if (err) return cb(err);
+
+    if (! credentials) return cb(Boom.unauthorized('no credentials'));
+
+    err = validateCredentials(credentials, attributes, self.options);
+    if (err) return cb(err);
+
+    cb(null, credentials, attributes);
+  }
+
 }

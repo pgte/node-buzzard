@@ -35,6 +35,21 @@ var header = Client.header(credentials);
 'Authorization': header
 ```
 
+### Client.url
+
+Creates a URL given a base URL and a credential:
+
+```javascript
+var credentials = {
+  id: 'iiiidddd',
+  key: 'kkkeeeyyy',
+  algorithm: 'sha1'
+};
+
+var baseURL = 'http://cats.cat/purr?a=1'
+var url = Client.url(baseURL, credentials);
+```
+
 ## Server
 
 ### Construct the server validator
@@ -71,7 +86,7 @@ function getCredentials(id, cb) {
 
 ### Server.authenticate
 
-Authenticates a request object.
+Authenticates a request object, either using authorization header or URL.
 
 ```javascript
 server.on('request', authenticate);

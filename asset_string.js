@@ -1,5 +1,5 @@
 module.exports = assetString;
 
-function assetString(nonce, ts) {
-  return nonce + '\n' + ts + '\n';
+function assetString(doc) {
+  return doc.nonce + '\n' + doc.ts + '\n';
 }
