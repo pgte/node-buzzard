@@ -24,6 +24,8 @@ Supports browserify.
 Creates a header given a credential:
 
 ```javascript
+var Client = require('buzzard').client;
+
 var credentials = {
   id: 'iiiidddd',
   key: 'kkkeeeyyy',
@@ -42,6 +44,8 @@ var header = Client.header(credentials);
 Creates a URL given a base URL and a credential:
 
 ```javascript
+var Client = require('buzzard').client;
+
 var credentials = {
   id: 'iiiidddd',
   key: 'kkkeeeyyy',
