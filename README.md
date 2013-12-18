@@ -10,9 +10,9 @@ Uses an `Authorization` header containing, `nonce`, timestamp and authentication
 
 Also supports URL-based authentication.
 
-The client holds a secret key that he uses to craft the authentication code from the nonce and the timestamp.
+The client holds a secret key that it uses to craft the authentication code from the nonce and the timestamp.
 
-The server gets the nonce so that he can validate if the nonce is repeated.
+The server gets the nonce so that it can validate if the nonce is repeated.
 
 Supports browserify.
 
