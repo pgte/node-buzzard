@@ -16,7 +16,7 @@
     "url": "https://github.com/pgte/node-buzzard/issues"
   },
   "homepage": "https://github.com/pgte/node-buzzard",
-  "browser": "client.js",
+  "browser": "client/index.js",
   "dependencies": {
     "boom": "~1.2.1",
     "xtend": "~2.1.1"
