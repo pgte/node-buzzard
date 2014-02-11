@@ -19,6 +19,22 @@ Supports browserify.
 
 ## JS Client
 
+### Node.js
+
+In Node.js you can get a reference to the Buzzard client library like this:
+
+```javascript
+var Client = require('buzzard').client;
+```
+
+### Browser
+
+On the browser, using browserify you can get a reference to the client library simply like this: (the server part of buzzard is not included for a smaller bundle size)
+
+```javascript
+var Client = require('buzzard');
+```
+
 ### Client.header
 
 Creates a header given a credential:
